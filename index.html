@@ -286,14 +286,13 @@
     background: var(--accent-light);
     border: 1px solid var(--accent-border);
     border-radius: 6px;
-    padding: 10px 14px;
+    padding: 10px 14px 10px 30px;
     margin-bottom: 8px;
     font-size: 14px;
-    display: flex;
-    gap: 8px;
-    align-items: flex-start;
+    position: relative;
+    line-height: 1.7;
   }
-  .star-item::before { content: '★'; color: var(--accent); font-size: 12px; margin-top: 2px; flex-shrink: 0; }
+  .star-item::before { content: '★'; color: var(--accent); font-size: 12px; position: absolute; left: 12px; top: 12px; }
 
   .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
   .pill {
@@ -1001,6 +1000,16 @@
           <div class="star-item"><u>Placing series</u> = gross manual dexterity. <u>Turning series</u> = both gross and fine dexterity + two-hand coordination.</div>
         </div>
         <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout">
+            <strong>Placing Series:</strong> <em>"Pick up each block from the tray one at a time and place it into the holes on the board as quickly as you can. Start when I say 'Go'."</em>
+          </div>
+          <div class="callout">
+            <strong>Turning Series:</strong> <em>"Pick up each block from the hole, turn it over so the other colour faces up, and replace it back in the same hole as quickly as you can. Start when I say 'Go'."</em>
+          </div>
+        </div>
+
+        <div class="section">
           <div class="section-label">Viva Q&amp;A</div>
           <div class="viva-item">
             <div class="viva-q" onclick="toggleViva(this)">What does the MRMT measure? What are its two series? <span class="viva-q-tag">EXP 1</span></div>
@@ -1035,6 +1044,16 @@
           </div>
           <div class="star-item">The <u>Competitive Index (C.I.) = Score in Competitive Series ÷ Non-Competitive Series</u>. C.I. would be <u>more than 1.00</u> in case competition facilitates performance.</div>
         </div>
+        <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout">
+            <strong>Non-competitive series:</strong> <em>"When I say 'start', start drawing smiling faces in the circles as shown earlier till I ask you to stop."</em>
+          </div>
+          <div class="callout">
+            <strong>Competitive series:</strong> <em>"You have been able to draw [mention number] smiling faces. There are other friends of your group who have been able to draw more faces than you. With a little more effort, I am sure you too will be able to draw as many or even more faces. Keep this in mind and try to excel. Start when I ask you to."</em>
+          </div>
+        </div>
+
         <div class="section">
           <div class="section-label">Viva Q&amp;A</div>
           <div class="viva-item">
@@ -1084,6 +1103,13 @@
           <div class="star-item"><strong>Negative NE</strong> = underestimation = Series II (bigger block) → Hypothesis 1 proved.<br><strong>Positive NE</strong> = overestimation = Series III (smaller block) → Hypothesis 2 proved.</div>
         </div>
         <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout">
+            <em>"Here is a block (indicate the standard block) at the centre and also there are 11 blocks for comparison (indicate the variable blocks). Lift the standard block to a height of 8 inches and place it back. In a similar manner, lift the first variable block to your extreme left with the same force and to the same height. Then lift the block at the centre and then the second comparison block at your left. Thus lift all the eleven blocks comparing each time with the block at the centre. While lifting the blocks, keep your sight fixed on the block. You have to <u>indicate one block out of the 11 blocks which is equal in weight</u> to the block at the centre after lifting all the blocks. Lift the weights using <u>your thumb, index finger and middle finger</u>."</em>
+          </div>
+        </div>
+
+        <div class="section">
           <div class="section-label">Viva Q&amp;A</div>
           <div class="viva-item">
             <div class="viva-q" onclick="toggleViva(this)">What is the difference between Constant Error, Gross Error, and Net Error? <span class="viva-q-tag">EXP 3</span></div>
@@ -1114,6 +1140,13 @@
           <div class="star-item">According to <u>Heidbreder</u> — concepts with concrete features are easier for concept attainment than abstract features and concepts with numbers.</div>
           <div class="star-item">The Concept Achievement Test by <u>M. Rajamanickam</u> is for <u>persons above 18 years</u>. It has 8 categories across 4 types: Concrete (Human Face, Animal, Bird), Object (Jug), Spatial (Square, Circle), Number (Three, Six).</div>
         </div>
+        <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout">
+            <em>"I will show you a series of pictures. At the bottom of every picture, a four-letter non-sense syllable word is printed. This is called the response word. You will have to associate each picture with the response word. After this, I will show you the same picture in the same order but without the response word and you will have to tell me the response word of the picture."</em>
+          </div>
+        </div>
+
         <div class="section">
           <div class="section-label">Viva Q&amp;A</div>
           <div class="viva-item">
@@ -1163,6 +1196,15 @@
             <tr><td>Object Assembly</td><td>Perceptual organisation, synthesis</td><td>120–180 sec/item</td><td>44</td></tr>
           </table>
         </div>
+        <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout"><strong>1. Picture Completion:</strong> <em>"I am going to show you some pictures in which there is <u>some important part missing</u>. You have to name the missing part."</em></div>
+          <div class="callout"><strong>2. Digit Symbol:</strong> <em>"Look at these boxes. Each has a number in the upper part and a mark/symbol in the lower part. Every number has a different symbol. By referring to this key, fill the remaining squares with respective symbols. Do this as fast as you can, when I give the ready signal. Do not omit any squares."</em></div>
+          <div class="callout"><strong>3. Block Design:</strong> <em>"These blocks are all alike. On some sides they are all red, on some all white and on some half red and half white. I am going to put them together to make a design. Similarly you have to arrange the blocks to match the design on a card. There are 10 cards, work fast."</em></div>
+          <div class="callout"><strong>4. Picture Arrangement:</strong> <em>"These pictures tell a story about a bird building a nest, but they are in wrong order. Put them in the right order so that they will tell a story. There are altogether 9 sets of picture, which you have to put in order. Work fast."</em></div>
+          <div class="callout"><strong>5. Object Assembly:</strong> <em>"If these pieces are put together correctly, they will make something. Go ahead and put them together as quickly as you can."</em></div>
+        </div>
+
         <div class="section">
           <div class="section-label">Viva Q&amp;A</div>
           <div class="viva-item">
