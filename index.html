@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Part B Lab Practicals — Study Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ─── LIGHT THEME ─── */
+  :root, [data-theme="light"] {
+    --bg: #f0f4f8;
+    --surface: #f8fbff;
+    --surface2: #eaf1f8;
+    --ink: #0e1820;
+    --muted: #5a6e80;
+    --accent: #1a6ea8;
+    --accent-light: #e0eef8;
+    --accent-border: #a8ccec;
+    --gold: #1a7a5a;
+    --gold-light: #e4f5ee;
+    --gold-border: #8ecbb4;
+    --border: #d0dde8;
+    --highlight: #e8f4ff;
+    --formula-bg: #0e1820;
+    --formula-fg: #f0f4f8;
+    --formula-muted: #8098b0;
+    --comp-row-alt: #f0f6fc;
+    --common-bg: #e4f5ee;
+    --common-border: #8ecbb4;
+    --common-text: #1a5a3a;
+    --diff-bg: #fff8e8;
+    --diff-border: #e8c870;
+    --diff-text: #7a5800;
+    --hyp-bg: #f0e8ff;
+    --hyp-border: #c0a0e8;
+    --hyp-text: #5a2a90;
+  }
+
+  /* ─── DARK THEME ─── */
+  [data-theme="dark"] {
+    --bg: #080e14;
+    --surface: #0e1820;
+    --surface2: #141e28;
+    --ink: #dce8f4;
+    --muted: #6a8898;
+    --accent: #4a9ede;
+    --accent-light: #0a1e32;
+    --accent-border: #1a4a6a;
+    --gold: #3abf8a;
+    --gold-light: #081a12;
+    --gold-border: #1a5a3a;
+    --border: #1a2a3a;
+    --highlight: #0a1e2e;
+    --formula-bg: #050a0f;
+    --formula-fg: #dce8f4;
+    --formula-muted: #4a6a80;
+    --comp-row-alt: #0a1620;
+    --common-bg: #081a12;
+    --common-border: #1a5a3a;
+    --common-text: #3abf8a;
+    --diff-bg: #181200;
+    --diff-border: #5a4400;
+    --diff-text: #d4a830;
+    --hyp-bg: #180a28;
+    --hyp-border: #4a2080;
+    --hyp-text: #b080e8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { transition: background 0.3s; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  .container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+
+  /* ─── THEME TOGGLE ─── */
+  .theme-toggle {
+    position: fixed;
+    top: 18px; right: 20px;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 6px 12px 6px 8px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.3s;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  .theme-toggle:hover { border-color: var(--accent); }
+  .toggle-track {
+    width: 34px; height: 18px;
+    background: var(--border);
+    border-radius: 9px;
+    position: relative;
+    transition: background 0.3s;
+    flex-shrink: 0;
+  }
+  [data-theme="dark"] .toggle-track { background: var(--accent); }
+  .toggle-knob {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 14px; height: 14px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  [data-theme="dark"] .toggle-knob { transform: translateX(16px); }
+  .toggle-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+  /* ─── HEADER ─── */
+  header {
+    text-align: center;
+    padding: 48px 0 40px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 40px;
+  }
+  header .label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  header h1 { font-family: 'Lora', serif; font-size: 2.2rem; font-weight: 600; color: var(--ink); line-height: 1.2; }
+  header h1 span { color: var(--accent); }
+  .exam-grid { display: flex; justify-content: center; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
+  .exam-chip {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--muted);
+  }
+  .exam-chip strong { color: var(--accent); font-weight: 500; }
+
+  /* ─── TABS ─── */
+  .tab-nav {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    background: var(--surface);
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 12px 8px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--muted);
+    transition: all 0.2s;
+    border-right: 1px solid var(--border);
+    text-align: center;
+    line-height: 1.3;
+  }
+  .tab-btn:last-child { border-right: none; }
+  .tab-btn.active { background: var(--accent); color: white; font-weight: 500; }
+  .tab-btn .tab-pts { display: block; font-family: 'DM Mono', monospace; font-size: 10px; margin-top: 2px; opacity: 0.7; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* ─── EXPERIMENT CARDS ─── */
+  .exp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .exp-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    border-bottom: 1px solid transparent;
+    transition: background 0.15s;
+  }
+  .exp-header:hover { background: var(--surface2); }
+  .exp-header.open { border-bottom-color: var(--border); background: var(--accent-light); }
+  .exp-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    background: var(--accent-light);
+    border: 1px solid var(--accent-border);
+    border-radius: 4px;
+    padding: 3px 8px;
+    white-space: nowrap;
+    font-weight: 500;
+  }
+  .exp-title { font-family: 'Lora', serif; font-size: 1rem; font-weight: 600; flex: 1; }
+  .exp-toggle { font-size: 18px; color: var(--muted); transition: transform 0.2s; }
+  .exp-header.open .exp-toggle { transform: rotate(180deg); }
+  .exp-body { display: none; padding: 20px 24px 24px; }
+  .exp-body.open { display: block; }
+
+  /* ─── SECTIONS ─── */
+  .section { margin-bottom: 24px; }
+  .section:last-child { margin-bottom: 0; }
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .plan-box {
+    background: var(--gold-light);
+    border: 1px solid var(--gold-border);
+    border-left: 3px solid var(--gold);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .hyp-box {
+    background: var(--hyp-bg);
+    border: 1px solid var(--hyp-border);
+    border-left: 3px solid var(--hyp-text);
+    border-radius: 6px;
+    padding: 14px 16px;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .steps { counter-reset: step; list-style: none; }
+  .steps li {
+    counter-increment: step;
+    position: relative;
+    padding-left: 36px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  .steps li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0; top: 2px;
+    width: 24px; height: 24px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  u { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+
+  .star-item {
+    background: var(--accent-light);
+    border: 1px solid var(--accent-border);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 8px;
+    font-size: 14px;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  .star-item::before { content: '★'; color: var(--accent); font-size: 12px; margin-top: 2px; flex-shrink: 0; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .pill {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .data-table { width: 100%; border-collapse: collapse; font-size: 13px; margin: 12px 0; }
+  .data-table th {
+    background: var(--accent-light);
+    color: var(--accent);
+    font-weight: 500;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 8px 12px;
+    text-align: left;
+    border: 1px solid var(--accent-border);
+  }
+  .data-table td { padding: 8px 12px; border: 1px solid var(--border); vertical-align: top; }
+  .data-table tr:nth-child(even) td { background: var(--comp-row-alt); }
+
+  .disc-text { font-size: 14px; color: var(--ink); line-height: 1.8; }
+  .disc-text p { margin-bottom: 10px; }
+
+  /* ─── VIVA Q&A ─── */
+  .viva-item { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 12px; overflow: hidden; }
+  .viva-q {
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    background: var(--surface);
+    font-size: 14px;
+    font-weight: 500;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .viva-q:hover { background: var(--accent-light); }
+  .viva-q-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 2px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+    border: 1px solid var(--accent-border);
+  }
+  .viva-a { display: none; padding: 12px 16px; font-size: 13px; background: var(--bg); border-top: 1px solid var(--border); line-height: 1.7; }
+  .viva-a.open { display: block; }
+
+  /* ─── STATS ─── */
+  .formula-box {
+    background: var(--formula-bg);
+    color: var(--formula-fg);
+    border-radius: 8px;
+    padding: 18px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    margin: 12px 0;
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+  .formula-box .formula-label { font-size: 10px; color: var(--formula-muted); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 10px; }
+  .callout {
+    background: var(--highlight);
+    border: 1px solid var(--accent-border);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    margin: 10px 0;
+  }
+  .callout strong { color: var(--accent); }
+
+  /* ─── COMPARE TABLE ─── */
+  .comp-intro { font-size: 13px; color: var(--muted); margin-bottom: 16px; font-style: italic; }
+  .comp-wrapper { overflow-x: auto; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 24px; }
+  .comp-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 700px; }
+  .comp-table thead th {
+    padding: 12px 14px;
+    text-align: left;
+    border-right: 1px solid rgba(255,255,255,0.12);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .comp-table thead th:first-child { background: #0e4878; color: #d0e8ff; min-width: 120px; position: sticky; left: 0; }
+  .comp-table thead th:not(:first-child) { background: var(--accent); color: white; }
+  .comp-table tbody td { padding: 11px 14px; border: 1px solid var(--border); vertical-align: top; line-height: 1.55; font-size: 13px; }
+  .comp-table tbody tr:nth-child(even) td:not(:first-child) { background: var(--comp-row-alt); }
+  .comp-table tbody td:first-child { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--accent); background: var(--accent-light); border-right: 2px solid var(--accent-border); white-space: nowrap; position: sticky; left: 0; }
+  .ctag { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 6px; border-radius: 3px; margin: 1px; background: var(--accent-light); color: var(--accent); border: 1px solid var(--accent-border); }
+
+  /* ─── NORMS BOX ─── */
+  .norms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
+  .norm-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 6px; padding: 8px 12px; font-size: 13px; display: flex; justify-content: space-between; align-items: center; }
+  .norm-item .norm-range { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+  .norm-item .norm-label { font-weight: 500; font-size: 12px; }
+
+  /* ─── DISCUSSION LINK ─── */
+  .disc-note { background: var(--diff-bg); border: 1px solid var(--diff-border); border-left: 3px solid var(--diff-text); border-radius: 6px; padding: 10px 14px; font-size: 13px; margin: 10px 0; color: var(--ink); }
+  .disc-note strong { color: var(--diff-text); }
+
+  @media (max-width: 600px) {
+    header h1 { font-size: 1.6rem; }
+    .tab-btn { font-size: 11px; padding: 10px 4px; }
+    .norms-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+  <div class="toggle-track"><div class="toggle-knob"></div></div>
+  <span class="toggle-label" id="toggle-label">Light</span>
+</button>
+
+<div class="container">
+
+  <header>
+    <div class="label">Psychology Lab Practicals</div>
+    <h1>Part <span>B</span> — ESE Study Notes</h1>
+    <div class="exam-grid">
+      <div class="exam-chip">Plan &amp; Procedure <strong>10 pts</strong></div>
+      <div class="exam-chip">Instructions &amp; Conduction <strong>5 pts</strong></div>
+      <div class="exam-chip">Discussion <strong>5 pts</strong></div>
+      <div class="exam-chip">Statistics <strong>5 pts</strong></div>
+    </div>
+  </header>
+
+  <div class="tab-nav">
+    <button class="tab-btn active" onclick="switchTab('experiments',this)">
+      Experiments 1–5
+      <span class="tab-pts">P P H V M P P I A</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('viva',this)">
+      Viva / Intro
+      <span class="tab-pts">Key concepts</span>
+    </button>
+    <button class="tab-btn" onclick="switchTab('stats',this)">
+      Statistics
+      <span class="tab-pts">Median Test · 5 pts</span>
+    </button>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- EXPERIMENTS TAB                           -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="tab-experiments" class="tab-content active">
+
+    <!-- EXP 1: MRMT -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 1</span>
+        <span class="exp-title">Minnesota Rate of Manipulation Test (M.R.M.T)</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+
+        <div class="section">
+          <div class="section-label">Problem / Aim</div>
+          <div class="plan-box">To measure the manual dexterity of the subject by administering Minnesota Rate of Manipulation Test.</div>
+          <div class="disc-text" style="margin-top:10px;">
+            <p>To achieve competence in activities requiring <u>manual dexterity, speed of gross movements of hand and arm, manual rhythm and coordination</u> are necessary. <u>Gross movements of hand and arm</u> may be measured in terms of the speed with which the individual picks up and places <u>cylindrical blocks</u> in holes on a board. <u>Finger dexterity and coordination</u>, necessary in speed and accurate manipulation of objects, may be tested by measuring the rate at which an individual is able to pick up, turn the block and replace it in the holes on the board.</p>
+          </div>
+          <div class="star-item">Similar in concept to <u>Stomberg dexterity test</u>, which measures two operations: (a) Speed of fitting blocks into the holes; (b) Speed of turning over blocks already in the holes.</div>
+          <div class="star-item">High score indicates <u>true vocational aptitude for packing and wrapping</u>. This test involves <u>eye-hand coordination</u> and to some extent <u>two-hand coordination</u>.</div>
+          <div class="star-item"><u>Placing series</u> measures <u>gross manual dexterity</u>. <u>Turning series</u> measures both <u>gross and fine dexterity and two-hand coordination</u>.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Plan</div>
+          <div class="plan-box">Administer M.R.M.T to the subject. Conduct the experiment in two series — Placing and Turning. Obtained time scores are interpreted with reference to the standard norms.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Materials</div>
+          <div class="pill-row">
+            <span class="pill">M.R.M.T board — wooden board + wooden tray with <u>58 symmetrical holes</u></span>
+            <span class="pill"><u>58 symmetrically cylindrical wooden blocks</u> (Blue one side, Red other)</span>
+            <span class="pill">Stop Clock</span>
+            <span class="pill">Writing Materials</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Precautions</div>
+          <ol class="steps">
+            <li>Demonstrate the task clearly before beginning.</li>
+            <li>Give a practice trial before the actual test.</li>
+            <li>Ensure the board is stable and at a comfortable height for the subject.</li>
+            <li>Record time accurately using the stop clock.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Procedure</div>
+          <ol class="steps">
+            <li>Seat the subject comfortably in front of the M.R.M.T board.</li>
+            <li><strong>Placing Series:</strong> All 58 blocks are placed in the tray. Subject picks them up one by one and places them into the holes on the board as quickly as possible. Time taken is recorded in seconds.</li>
+            <li><strong>Turning Series:</strong> All 58 blocks are already in the holes. Subject picks each block up, turns it over, and replaces it in the hole. Time taken is recorded in seconds.</li>
+            <li>The time score for each series is noted and compared to standard norms to obtain a percentile rank.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout">
+            <strong>Placing Series:</strong> <em>"Pick up each block from the tray one at a time and place it into the holes on the board as quickly as you can. Start when I say 'Go'."</em>
+          </div>
+          <div class="callout">
+            <strong>Turning Series:</strong> <em>"Pick up each block from the hole, turn it over so the other colour faces up, and replace it back in the same hole as quickly as you can. Start when I say 'Go'."</em>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Analysis &amp; Norms</div>
+          <ol class="steps">
+            <li>Record the total time taken (in seconds) for each series separately.</li>
+            <li>Compare the time scores to the standard norms table to obtain a <strong>Percentile Rank</strong> for each series.</li>
+            <li>Interpret the percentile rank using the norms below.</li>
+          </ol>
+          <div class="norms-grid">
+            <div class="norm-item"><span class="norm-label" style="color:#c0392b;">Poor</span><span class="norm-range">Below 20</span></div>
+            <div class="norm-item"><span class="norm-label" style="color:#e67e22;">Fair</span><span class="norm-range">21 to 40</span></div>
+            <div class="norm-item"><span class="norm-label" style="color:#f39c12;">Average</span><span class="norm-range">41 to 60</span></div>
+            <div class="norm-item"><span class="norm-label" style="color:#27ae60;">Good</span><span class="norm-range">61 to 90</span></div>
+            <div class="norm-item" style="grid-column: span 2;"><span class="norm-label" style="color:#2980b9;">Very Good</span><span class="norm-range">91 to 100</span></div>
+          </div>
+          <p style="font-size:13px;color:var(--muted);margin:14px 0 8px;font-family:'DM Mono',monospace;letter-spacing:.05em;">TABLE I — Individual Data (Time in Seconds)</p>
+          <table class="data-table">
+            <tr><th>Name</th><th>Placing Series (sec)</th><th>Turning Series (sec)</th><th>Percentile — Placing</th><th>Percentile — Turning</th><th>Interpretation — Placing</th><th>Interpretation — Turning</th></tr>
+            <tr><td style="height:36px;"></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </table>
+          <div class="disc-note"><strong>Discussion pointers:</strong> Compare percentile ranks in the two series. Discuss individual differences in speed of turning and placing. Note: lower time = better performance (faster).</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXP 2: COMPETITION ON PERFORMANCE -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 2</span>
+        <span class="exp-title">Competition on Performance</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+
+        <div class="section">
+          <div class="section-label">Problem / Aim</div>
+          <div class="plan-box">To determine experimentally the effect of competition on the performance of the subject.</div>
+          <div class="disc-text" style="margin-top:10px;">
+            <p><u>Competition is a very strong motive which promotes work and increases productivity without necessarily affecting the quality of performance.</u></p>
+            <p><u>Getting ahead of someone else, appears to be a basic human tendency.</u> Competition begins in early childhood among siblings. An <u>individual's performance is constantly compared with others and when one excels, the felt reward could be both intrinsic as well as extrinsic.</u></p>
+            <p>Most people respond to the challenge of competition with added effort and zeal. However, in some individuals the challenge of competition can have the opposite effect, due to anxiety.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Hypothesis</div>
+          <div class="hyp-box">Performance of the subject significantly improves with competition.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Plan</div>
+          <div class="plan-box">To compare the performance of the individual subject under competitive and non-competitive conditions.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Variables</div>
+          <table class="data-table">
+            <tr><th>Variable Type</th><th>Description</th></tr>
+            <tr><td><strong>Independent Variable</strong></td><td>A set of instructions given to the subject to induce competition.</td></tr>
+            <tr><td><strong>Relevant Variables</strong></td><td>1. Subjects are matched on variables of age, gender and writing ability.<br>2. Tasks are matched in terms of difficulty level and time allotted.</td></tr>
+            <tr><td><strong>Dependent Variable</strong></td><td>Performance of the subject under competitive and non-competitive conditions.</td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Materials</div>
+          <div class="pill-row">
+            <span class="pill">Data sheets with circles arranged in order</span>
+            <span class="pill">Stop watch / Stop clock</span>
+            <span class="pill">Writing materials</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Precautions</div>
+          <ol class="steps">
+            <li>Avoid distractions during the experiment.</li>
+            <li>Instructions to induce competitive spirit in the second series must be powerful enough to motivate the subject.</li>
+            <li>Give a <u>rest period of two minutes</u> between the two series.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Procedure</div>
+          <ol class="steps">
+            <li><strong>Non-competitive series:</strong> Seat the subject comfortably. Place the data sheet in front of the subject and demonstrate how to draw smiling faces in the circles. Give the instructions, start the stop watch simultaneously giving the 'start' signal. Allow <u>three minutes</u>. At the end of the time limit ask the subject to stop and count the number of faces correctly drawn. Give a rest period of <u>two minutes</u> before giving the competitive series.</li>
+            <li><strong>Competitive series:</strong> The same procedure is followed, but the knowledge of the scores of other subjects is given. The key factor in this series is the nature of instructions to the subject.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout">
+            <strong>Non-competitive series:</strong> <em>"When I say 'start', start drawing smiling faces in the circles as shown earlier till I ask you to stop."</em>
+          </div>
+          <div class="callout">
+            <strong>Competitive series:</strong> <em>"You have been able to draw [mention number] smiling faces. There are other friends of your group who have been able to draw more faces than you. With a little more effort, I am sure you too will be able to draw as many or even more faces. Keep this in mind and try to excel. Start when I ask you to."</em>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Analysis of Results</div>
+          <ol class="steps">
+            <li>Number of smiling faces correctly drawn in each series separately constitutes the score.</li>
+            <li>Calculate the <strong>Competitive Index (C.I.)</strong> using the formula:</li>
+          </ol>
+          <div class="formula-box">
+            <div class="formula-label">Competitive Index Formula</div>
+            C.I. = Score in Competitive Series ÷ Score in Non-Competitive Series
+          </div>
+          <div class="star-item"><u>C.I. is the competitive index</u> — this would be <u>more than 1.00</u> in case competition facilitates performance.</div>
+          <p style="font-size:13px;color:var(--muted);margin:14px 0 8px;font-family:'DM Mono',monospace;letter-spacing:.05em;">TABLE I — Individual performance in non-competitive and competitive series</p>
+          <table class="data-table">
+            <tr><th>Name</th><th>Score in Non-Competitive Series</th><th>Score in Competitive Series</th><th>Competition Index (C.I.)</th></tr>
+            <tr><td style="height:36px;"></td><td></td><td></td><td></td></tr>
+          </table>
+          <div class="disc-note"><strong>Discussion pointers:</strong> Discuss whether competition enhanced performance in Series II (C.I. &gt; 1.00 confirms hypothesis). Discuss individual differences in the extent of competition affecting performance.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXP 3: SIZE-WEIGHT ILLUSION -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 3</span>
+        <span class="exp-title">Size-Weight Illusion</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+
+        <div class="section">
+          <div class="section-label">Problem / Aim</div>
+          <div class="plan-box">To study experimentally the effect of perception of size on judgement of weights.</div>
+          <div class="disc-text" style="margin-top:10px;">
+            <p>Things that are big are usually heavier than things that are small (made out of the same material). If the weights of the bigger and smaller things are the same, we tend to judge the large thing as lighter. The experience of size gives us a wrong suggestion regarding the weight — an association formed by long experience of lifting various objects leads to this error in judgement.</p>
+            <p><u>This illusion is a normal phenomenon and has particular value as a measure of suggestibility in older children and adults.</u> <u>The larger the size of the block, the greater is the pressure applied on the block by the subject</u>, and then finding it to be lighter than expected, <u>the subject underestimates its weight</u>. For the smaller sized block, <u>less pressure is applied</u> and finding it heavier than expected, <u>the subject overestimates its weight</u>.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Hypothesis</div>
+          <div class="hyp-box">1. Perception of larger size leads to <strong>underestimation</strong> of weight.<br>2. Perception of smaller size leads to <strong>overestimation</strong> of weight.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Plan</div>
+          <div class="plan-box">To compare the extent of error committed in the three series while judging the weight.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Variables</div>
+          <table class="data-table">
+            <tr><th>Variable Type</th><th>Description</th></tr>
+            <tr><td><strong>Independent Variable</strong></td><td>The size of the standard block.</td></tr>
+            <tr><td><strong>Relevant Variables</strong></td><td>The progressive increase in the weight of the variable blocks and their identical appearance.</td></tr>
+            <tr><td><strong>Dependent Variable</strong></td><td>The judgement of weight given by the subject (Point of Subjective Equality).</td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Materials</div>
+          <div class="pill-row">
+            <span class="pill"><u>Three standard blocks of different sizes weighing 55 gms each</u> (one bigger, one equal, one smaller)</span>
+            <span class="pill"><u>Eleven variable/comparison blocks</u> ranging from 30 gms to 80 gms (progressive increase of 5 gms, all equal size)</span>
+            <span class="pill">Writing Materials</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Precautions</div>
+          <ol class="steps">
+            <li>The subject is given no clue about the weight of the standard blocks.</li>
+            <li>The random arrangement of the blocks should be done without the knowledge of the subject.</li>
+            <li>Each block should be lifted with the <u>preferred hand</u>, with the same force and to the same height.</li>
+            <li>The subject is required to keep sight on the block being lifted.</li>
+          </ol>
+          <div class="star-item">Mnemonic for precautions: <strong>No clue on wt. · random arr. · lift w pref. hand · sight</strong></div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Procedure</div>
+          <ol class="steps">
+            <li>The table is arranged at <u>such a height that subject's forearm will be parallel to the floor</u> while lifting the weights. The eleven variable blocks are arranged in a semicircle, equidistant from each other. Variable blocks are kept in a random order of weight. The standard block is kept at the centre.</li>
+            <li>The experiment is conducted in <u>three series with two trials in each series</u>.</li>
+            <li><strong>First Series (same size standard block):</strong> Subject lifts the standard block to a height of approximately <u>8 inches</u>. Then lifts each comparison block to the same height in sequence (left to right). Subject indicates which one block out of 11 is equal in weight to the standard block. This is the <u>Point of Subjective Equality (PSE)</u>.</li>
+            <li><strong>Second Series (bigger sized standard block):</strong> The bigger standard block is placed at the centre. Same procedure followed. Two trials given.</li>
+            <li><strong>Third Series (smaller sized standard block):</strong> The smaller standard block is placed at the centre. Same procedure followed. Two trials given.</li>
+            <li>In the second trial of each series, the position of comparison blocks is interchanged without the subject's knowledge. The procedure is repeated. The weight of the block judged equal in each trial is noted separately and the average is calculated.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout">
+            <em>"Here is a block (indicate the standard block) at the centre and also there are 11 blocks for comparison (indicate the variable blocks). Lift the standard block to a height of 8 inches and place it back. In a similar manner, lift the first variable block to your extreme left with the same force and to the same height. Then lift the block at the centre and then the second comparison block at your left. Thus lift all the eleven blocks comparing each time with the block at the centre. While lifting the blocks, keep your sight fixed on the block. You have to <u>indicate one block out of the 11 blocks which is equal in weight</u> to the block at the centre after lifting all the blocks. Lift the weights using <u>your thumb, index finger and middle finger</u>."</em>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Analysis of Results</div>
+          <ol class="steps">
+            <li>The average of weights as judged by the subject on the 2 trials is the <u>Point of Subjective Equality (PSE)</u>:<br><strong>Avg PSE = (Trial 1 + Trial 2) / 2</strong></li>
+            <li>In the <strong>first series</strong>, the difference between Avg PSE and the weight of the standard block (55 gms) constitutes the <u>Constant Error (CE)</u>:<br><strong>CE = Avg PSE − Std. Wt. (55)</strong><br><em>(Constant error occurs due to innate inaccuracy in the individual's judgement)</em></li>
+            <li>In the <strong>second and third series</strong>, the difference between PSE and the weight of the standard block constitutes the <u>Gross Error (GE)</u>:<br><strong>GE = Avg PSE − Std. Wt. (55)</strong><br><em>(Gross error is a combination of innate inaccuracy in the subject AND inaccuracy in judgement because of size)</em></li>
+            <li>The algebraic difference between Gross Error and Constant Error yields the <u>Net Error (NE)</u>:<br><strong>NE = Gross Error − Constant Error</strong><br><em>(Net error is the error that occurs solely due to size)</em></li>
+          </ol>
+          <div class="star-item"><strong>Negative NE</strong> = Underestimation = Hypothesis 1 proved (bigger block → underestimates weight)<br><strong>Positive NE</strong> = Overestimation = Hypothesis 2 proved (smaller block → overestimates weight)</div>
+          <p style="font-size:13px;color:var(--muted);margin:14px 0 8px;font-family:'DM Mono',monospace;letter-spacing:.05em;">TABLE I — Subject's judgement of weights in all three series</p>
+          <table class="data-table">
+            <tr><th>Name</th><th>Series I — Avg PSE</th><th>Series I — CE</th><th>Series II — Avg PSE</th><th>Series II — GE</th><th>Series II — NE</th><th>Series III — Avg PSE</th><th>Series III — GE</th><th>Series III — NE</th></tr>
+            <tr><td style="height:36px;"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </table>
+          <div class="disc-note"><strong>Discussion pointers:</strong> Discuss the effect of the size of the standard block on subject's judgement of weight. Discuss the direction of error in relevance to underestimation and overestimation of the weights.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXP 4: CONCEPT ACHIEVEMENT TEST -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 4</span>
+        <span class="exp-title">Concept Achievement (Formation) Test</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+
+        <div class="section">
+          <div class="section-label">Problem / Aim</div>
+          <div class="plan-box">To study the processes of Concept Achievement using the Concept Achievement Test by M. Rajamanickam.</div>
+          <div class="disc-text" style="margin-top:10px;">
+            <p><u>Concept is defined as a categorisation of objects, events or people that share common properties.</u> Words in any language are the symbolic representations of some objects, events or ideas. <u>A symbol is an idea and it represents the object in the form of a word — a concept. Therefore, a concept is a word which has certain specific meaning and this meaning is universally accepted.</u></p>
+            <p><u>Concept achievement</u> is the process of discovering some quality or property that are common to a series of objects. It refers to the description of some common element in objects and differentiating the quality of one object from another.</p>
+            <p>Three important psychological processes involved in concept achievement: <strong>abstraction, generalization, and discrimination</strong>.</p>
+          </div>
+          <div class="star-item"><strong>Abstraction</strong> — Observing the features and characteristics of an object.<br><strong>Discrimination</strong> — Finding the difference in the features between objects.<br><strong>Generalization</strong> — Applying this rule to other similar features and objects.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Types of Concepts</div>
+          <table class="data-table">
+            <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+            <tr><td><strong>Simple</strong></td><td>Only one quality</td><td>Colour white — white paper, white chalk</td></tr>
+            <tr><td><strong>Conjunctive</strong> (Complex)</td><td>Two or more qualities</td><td>Cat — 4 legs, a tail, animal, pet</td></tr>
+            <tr><td><strong>Disjunctive</strong> (Complex)</td><td>One quality puts it in the class</td><td>Fuel — wood, petrol, gas</td></tr>
+            <tr><td><strong>Relational</strong></td><td>Characteristics vary comparatively</td><td>More than, less than, rare, fatter, shorter</td></tr>
+          </table>
+          <div class="star-item">According to <u>Heidbreder</u>, concepts with concrete features are easier for concept attainment than concepts with abstract features and concepts with numbers.</div>
+          <div class="star-item">The Concept Achievement Test by <u>M. Rajamanickam</u> is designed and developed for <u>persons above 18 years</u>.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Hypothesis</div>
+          <div class="hyp-box">
+            1. The number of correct answers progressively increases in each set for each category as concept achievement takes place.<br>
+            2. Concepts with <u>concrete features</u> take less number of trials for concept attainment than object concepts, spatial concepts and number concepts.
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Plan</div>
+          <div class="plan-box">The test is administered to the subject and the number of correct answers for each set is noted as also the category of concepts formed.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Variables</div>
+          <table class="data-table">
+            <tr><th>Variable Type</th><th>Description</th></tr>
+            <tr><td><strong>Independent Variable</strong></td><td>Type of concepts — concrete, object, spatial and numerical.</td></tr>
+            <tr><td><strong>Dependent Variable</strong></td><td>Number of correct answers for each type of concept. Number of trials taken for concept attainment.</td></tr>
+          </table>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Materials</div>
+          <div class="disc-text">
+            <p>The Concept Achievement Test consists of:</p>
+          </div>
+          <ol class="steps">
+            <li><strong>Response set</strong> — six sets of eight categories of pictures in different forms in each set with response words (non-sense syllables) at the bottom. The response words are the same for the six different forms of the same category of pictures.</li>
+            <li><strong>Stimulus set</strong> — Contains six sets of eight categories of pictures but without the response word at the bottom.</li>
+            <li>Data Sheet</li>
+            <li>Stop Clock</li>
+          </ol>
+          <div class="callout">
+            <strong>8 categories of pictures:</strong><br>
+            Concrete: Human Face (MUKR) · Animal (GALB) · Bird (LAGH)<br>
+            Object: Jug (KEMG)<br>
+            Spatial: Square Pattern (BIKT) · Circle Pattern (FARH)<br>
+            Number: Three (CEVT) · Six (JISP)
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Experimental Controls</div>
+          <ol class="steps">
+            <li>The order of presentation of the pictures of the response set to be changed for each set systematically.</li>
+            <li>Each picture to be shown for <u>10 seconds</u> and a break of <u>20 seconds</u> to be given between each of the six sets.</li>
+            <li>The experimenter should tell the subject the correct response word (four-letter non-sense syllable) only <u>once for the first set of 8 pictures</u> using the stimulus set.</li>
+            <li>The correct response words are <u>not to be given for the other sets</u>.</li>
+            <li>The subject should be given a <u>7th trial (with the 1st set)</u> if they do not score even the minimum score of eight at the rate of one per category per set. This may be taken as the final level of concept achievement.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Procedure</div>
+          <ol class="steps">
+            <li>The experiment is conducted in <u>six trials</u> (each of the 6 sets = one trial). The experimenter prepares a data sheet, entering responses using 'R' for right and 'W' for wrong for each set.</li>
+            <li>Each picture is exposed for <u>10 seconds</u>. There can be <u>20 seconds</u> time between sets.</li>
+            <li>If the subject does not score the minimum score of 8 (one per concept per set), a <u>seventh trial may be given</u> with the first set.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout">
+            <em>"I will show you a series of pictures. At the bottom of every picture, a four-letter non-sense syllable word is printed. This is called the response word. You will have to associate each picture with the response word. After this, I will show you the same picture in the same order but without the response word and you will have to tell me the response word of the picture."</em>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Analysis of Results</div>
+          <ol class="steps">
+            <li>Assign a score of 1 for every correct response.</li>
+            <li>Maximum score is <strong>48</strong>. Minimum score is <strong>0</strong>.</li>
+            <li>Record scores in the data sheet for each set (trial) and each category.</li>
+            <li>Calculate total correct responses and mean number of trials taken for each category type.</li>
+          </ol>
+          <p style="font-size:13px;color:var(--muted);margin:14px 0 8px;font-family:'DM Mono',monospace;letter-spacing:.05em;">TABLE I — Trial (set) and response words of the subject</p>
+          <table class="data-table">
+            <tr><th>Sl. No.</th><th>Picture</th><th>Response Word</th><th>Set 1</th><th>Set 2</th><th>Set 3</th><th>Set 4</th><th>Set 5</th><th>Set 6</th><th>Set 7 (Extra)</th><th>No. of Trials Taken</th></tr>
+            <tr><td>1</td><td>Bird (c)</td><td>LAGH</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>2</td><td>Human Face (c)</td><td>MUKR</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>3</td><td>Square Pattern (s)</td><td>BIKT</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>4</td><td>Number 3 (n)</td><td>CEVT</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>5</td><td>Animal (c)</td><td>GALB</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>6</td><td>Circle Pattern (s)</td><td>FARH</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>7</td><td>Number 6 (n)</td><td>JISP</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>8</td><td>Jug (o)</td><td>KEMG</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+            <tr><td colspan="2">No. of correct responses</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          </table>
+          <div class="disc-note"><strong>c</strong> = concrete · <strong>s</strong> = spatial · <strong>n</strong> = number · <strong>o</strong> = object. Discuss whether concrete concepts took fewer trials than others.</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EXP 5: WAPIS -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 5</span>
+        <span class="exp-title">Wechsler Adult Performance Intelligence Scale (WAPIS)</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+
+        <div class="section">
+          <div class="section-label">Problem / Aim</div>
+          <div class="plan-box">To assess the intelligence of the subject using WAPIS — Wechsler's Adult Performance Intelligence Scale.</div>
+          <div class="disc-text" style="margin-top:10px;">
+            <p>According to <u>David Wechsler (1975)</u> — <em>"Intelligence is the capacity to understand the world, think rationally and use resources effectively when faced with challenges."</em></p>
+            <p>The term <u>'Mental Tests' was first employed by Cattell in 1870</u>. The modern intelligence testing movement was launched in 1905 by the French psychologist <u>Alfred Binet</u>. <u>William Stern</u>, a German psychologist devised the concept of the <u>Intelligence Quotient (IQ)</u>.</p>
+          </div>
+          <div class="formula-box">
+            <div class="formula-label">IQ Formula</div>
+            I.Q. = (Mental Age (MA) / Chronological Age (CA)) × 100
+          </div>
+          <div class="star-item">Since the time they were published in 1938, <u>Wechsler Scales</u> have proved to be the best available individual tests for evaluating intelligence among adults. WAPIS is the performance scale adapted to Indian conditions by <u>Prabha Ramalingaswamy</u>. It is an individual test, mainly used in <u>clinical studies and in counselling</u>.</div>
+          <div class="star-item">WAIS consists of 11 sub-tests. The first six form the <u>verbal scale</u> and the last five form the <u>performance scale</u>. Only the <strong>5 performance sub-tests</strong> have been adapted for Indian conditions as WAPIS.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Plan</div>
+          <div class="plan-box">To administer the five sub-tests of WAPIS to the subject and score and interpret the data with reference to the norms.</div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Materials</div>
+          <div class="pill-row">
+            <span class="pill">Booklet — Picture Completion items + Block Design designs</span>
+            <span class="pill">Booklet — Picture Arrangement cards</span>
+            <span class="pill">16 red &amp; white cubes (Block Design)</span>
+            <span class="pill">4 boxes with pieces (Object Assembly)</span>
+            <span class="pill">Scoring key (Digit Symbol)</span>
+            <span class="pill">Writing Materials</span>
+            <span class="pill">Stop Clock</span>
+            <span class="pill">Norms</span>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Precautions</div>
+          <ol class="steps">
+            <li>Instructions must be simple and clear.</li>
+            <li>In picture completion, the subject may not give a verbal response but will point to a missing part of the picture. The examiner should consider the item passed.</li>
+            <li>Time limits should be followed strictly and where time bonuses are possible, record the subject's time on the items and credit the bonus correctly.</li>
+            <li>Avoid errors in converting raw scores to scaled scores and scaled scores to IQs.</li>
+            <li>The <u>Block Design Test is discontinued after 3 consecutive failures</u>. Failure on both trials of either design 1 or 2 is considered one failure.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Procedure — The 5 Sub-Tests</div>
+          <div class="disc-text" style="margin-bottom:10px;">Subject is seated comfortably. After establishing rapport, the five sub-tests are administered in the following order:</div>
+          <ol class="steps">
+            <li><strong>Picture Completion:</strong> 26 cards with pictures. An important part of each picture is missing. Subject must name the missing part. Time limit per item: <u>20 seconds</u>. If subject cannot answer the first two items, examiner gives the answers, but no help is given for remaining items.</li>
+            <li><strong>Digit Symbol:</strong> Subject substitutes digits with symbols by referring to the key. Demonstrate the first 3 symbols, then let subject complete the remaining 7 items from the sample. Time limit: <u>90 seconds</u> to complete the remaining 90 symbols.</li>
+            <li><strong>Block Design:</strong> Ten cards with designs. Four blocks (all red / all white / half-red-half-white) are given. Subject puts together the blocks to match each design. First two cards are demonstrated. Time limits: Designs 1–6 = <u>60 seconds each</u>; Designs 7–10 = <u>120 seconds each</u>. Discontinued after 3 consecutive failures.</li>
+            <li><strong>Picture Arrangement:</strong> 9 items made up of cards which when arranged tell a story. Cards are presented in the order indicated by the numbers on the back. Subject arranges them in a meaningful manner. If subject fails both items 1 and 2, discontinue. Time limit: <u>60 seconds</u> for first 6 items; <u>120 seconds</u> for items 7–9.</li>
+            <li><strong>Object Assembly:</strong> Pieces of each item are presented; subject arranges them to form an object. Order: Mannequin → Profile → Hand → Elephant. Time limit: first 2 items = <u>120 seconds</u>; last two = <u>180 seconds</u>.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Instructions</div>
+          <div class="callout"><strong>1. Picture Completion:</strong> <em>"I am going to show you some pictures in which there is <u>some important part missing</u>. You have to name the missing part."</em></div>
+          <div class="callout"><strong>2. Digit Symbol:</strong> <em>"Look at these boxes. Each has a number in the upper part and a mark/symbol in the lower part. Every number has a different symbol. By referring to this key, fill the remaining squares with respective symbols. Do this as fast as you can, when I give the ready signal. Do not omit any squares."</em></div>
+          <div class="callout"><strong>3. Block Design:</strong> <em>"These blocks are all alike. On some sides they are all red, on some all white and on some half red and half white. I am going to put them together to make a design. Similarly you have to arrange the blocks to match the design on a card. There are 10 cards, work fast."</em></div>
+          <div class="callout"><strong>4. Picture Arrangement:</strong> <em>"These pictures tell a story about a bird building a nest, but they are in wrong order. Put them in the right order so that they will tell a story. There are altogether 9 sets of picture, which you have to put in order. Work fast."</em></div>
+          <div class="callout"><strong>5. Object Assembly:</strong> <em>"If these pieces are put together correctly, they will make something. Go ahead and put them together as quickly as you can."</em></div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Scoring</div>
+          <table class="data-table">
+            <tr><th>Sub-test</th><th>Scoring</th><th>Max Score</th></tr>
+            <tr><td><strong>Picture Completion</strong></td><td>One point per correct response</td><td>26</td></tr>
+            <tr><td><strong>Digit Symbol</strong></td><td>One point per square filled correctly. Half credit for reversed symbols. 10 sample items not included.</td><td>90</td></tr>
+            <tr><td><strong>Block Design</strong></td><td>Designs 1–2: 4 pts (1st trial) or 4 pts (2nd trial)<br>Designs 3–6: 4 pts each<br>Designs 7–10: 4 pts each<br>Refer table for time bonuses.</td><td>48</td></tr>
+            <tr><td><strong>Picture Arrangement</strong></td><td>Designs 1–2: 4 pts (1st trial) or 2 pts (2nd trial)<br>Designs 3–9: 4 pts each<br>Refer table for time bonuses.</td><td>42</td></tr>
+            <tr><td><strong>Object Assembly</strong></td><td>Mannequin = 5 pieces · Profile = 9 · Hand = 7 · Elephant = 8<br>Refer table for time bonuses.</td><td>44</td></tr>
+          </table>
+          <ol class="steps" style="margin-top:12px;">
+            <li>Compute raw score for each sub-test.</li>
+            <li>Convert raw scores to scaled scores using the norms table.</li>
+            <li>Convert scaled scores to IQs.</li>
+          </ol>
+          <p style="font-size:13px;color:var(--muted);margin:14px 0 8px;font-family:'DM Mono',monospace;letter-spacing:.05em;">TABLE I — Individual Data on WAPIS</p>
+          <table class="data-table">
+            <tr><th>Sl. No.</th><th>Test</th><th>Raw Score</th><th>Interpretation</th><th>Scaled Score</th></tr>
+            <tr><td>1</td><td>Picture Completion</td><td></td><td></td><td></td></tr>
+            <tr><td>2</td><td>Digit Symbol</td><td></td><td></td><td></td></tr>
+            <tr><td>3</td><td>Block Design</td><td></td><td></td><td></td></tr>
+            <tr><td>4</td><td>Picture Arrangement</td><td></td><td></td><td></td></tr>
+            <tr><td>5</td><td>Object Assembly</td><td></td><td></td><td></td></tr>
+            <tr><td colspan="4"><strong>Total Score / Scaled Score Total</strong></td><td></td></tr>
+            <tr><td colspan="4"><strong>IQ</strong></td><td></td></tr>
+            <tr><td colspan="4"><strong>Interpretation</strong></td><td></td></tr>
+          </table>
+          <div class="disc-note"><strong>Discussion pointers:</strong> Discuss subject's performance in each sub-test. Discuss subject's IQ. Compare individual and group data.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /experiments tab -->
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- VIVA / INTRO TAB                          -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="tab-viva" class="tab-content">
+
+    <!-- MRMT Intro -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 1</span>
+        <span class="exp-title">MRMT — Key Concepts</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+        <div class="section">
+          <div class="section-label">What is Manual Dexterity?</div>
+          <div class="disc-text">
+            <p>To achieve competence in activities requiring manual dexterity, <u>speed of gross movements of hand and arm, manual rhythm and coordination</u> are necessary. <u>Gross movements of hand and arm</u> are measured in terms of the speed with which the individual picks up and places <u>cylindrical blocks</u> in holes on a board. <u>Finger dexterity and coordination</u> are measured by the rate at which the individual picks up, turns the block and replaces it in the holes.</p>
+          </div>
+          <div class="star-item">MRMT is similar to <u>Stomberg dexterity test</u> — measures: (a) Speed of fitting blocks into the holes; (b) Speed of turning over blocks already in the holes.</div>
+          <div class="star-item">It is observed from a study on <u>wrappers and packers</u> that these two groups scored higher than the general population on the MRMT. High score = <u>true vocational aptitude for packing and wrapping</u>. The test involves <u>eye-hand coordination</u> and to some extent <u>two-hand coordination</u>.</div>
+          <div class="star-item"><u>Placing series</u> = gross manual dexterity. <u>Turning series</u> = both gross and fine dexterity + two-hand coordination.</div>
+        </div>
+        <div class="section">
+          <div class="section-label">Viva Q&amp;A</div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What does the MRMT measure? What are its two series? <span class="viva-q-tag">EXP 1</span></div>
+            <div class="viva-a">MRMT measures manual dexterity. The Placing Series measures gross manual dexterity. The Turning Series measures both gross and fine dexterity and two-hand coordination.</div>
+          </div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What does a high score on MRMT indicate? <span class="viva-q-tag">EXP 1</span></div>
+            <div class="viva-a">A high score indicates a true vocational aptitude for packing and wrapping. Studies on wrappers and packers showed they scored higher than the general population on the MRMT.</div>
+          </div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What are the norms for interpreting the MRMT percentile? <span class="viva-q-tag">EXP 1</span></div>
+            <div class="viva-a">Below 20 = Poor · 21–40 = Fair · 41–60 = Average · 61–90 = Good · 91–100 = Very Good. Remember: lower time score = faster = better performance.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Competition Intro -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 2</span>
+        <span class="exp-title">Competition on Performance — Key Concepts</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+        <div class="section">
+          <div class="section-label">What is Competition?</div>
+          <div class="disc-text">
+            <p><u>Competition is a very strong motive which promotes work and increases productivity without necessarily affecting the quality of performance.</u> <u>Getting ahead of someone else appears to be a basic human tendency.</u></p>
+            <p>Competition begins in early childhood among siblings and continues through school and college. <u>An individual's performance is constantly compared with others and when one excels, the felt reward could be both intrinsic as well as extrinsic.</u></p>
+            <p>Most people respond to the challenge of competition with added effort and zeal. However, in some individuals the challenge of competition can have the opposite effect due to anxiety.</p>
+          </div>
+          <div class="star-item">The <u>Competitive Index (C.I.) = Score in Competitive Series ÷ Non-Competitive Series</u>. C.I. would be <u>more than 1.00</u> in case competition facilitates performance.</div>
+        </div>
+        <div class="section">
+          <div class="section-label">Viva Q&amp;A</div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What is the Competitive Index and what does a value above 1.00 mean? <span class="viva-q-tag">EXP 2</span></div>
+            <div class="viva-a">C.I. = Score in Competitive Series ÷ Score in Non-Competitive Series. A C.I. of more than 1.00 indicates that competition facilitated (improved) performance — hypothesis is proved.</div>
+          </div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What is the key difference between the two series in this experiment? <span class="viva-q-tag">EXP 2</span></div>
+            <div class="viva-a">In the non-competitive series, the subject draws smiling faces without knowing others' scores. In the competitive series, the same procedure is followed but the subject is told others drew more faces — the key factor is the nature of the instructions (inducing competitive spirit).</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Size-Weight Illusion Intro -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 3</span>
+        <span class="exp-title">Size-Weight Illusion — Key Concepts</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+        <div class="section">
+          <div class="section-label">What is Suggestion?</div>
+          <div class="disc-text">
+            <p>Stimulus conditions which lead to uncritical conformity is known as suggestion — involves the deliberate manipulation of one's behaviour by another, often the former being unaware of this manipulation. Past conditioning and learning of the person makes him conform.</p>
+            <p>Suggestion refers to the stimulus condition that produces conformity. <u>Suggestibility denotes an individual's predisposition to confirm or accept suggestion.</u> One such laboratory-induced condition is <strong>ideo-motor suggestion</strong>.</p>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section-label">The Illusion</div>
+          <div class="disc-text">
+            <p>Things that are big are usually heavier than things that are small (made out of the same material). If the weights of the bigger and smaller things are the same, we tend to judge the large thing as lighter. <u>This illusion is a normal phenomenon and has particular value as a measure of suggestibility in older children and adults.</u></p>
+          </div>
+          <div class="star-item"><u>Larger block</u> → greater pressure applied → found lighter than expected → <u>subject underestimates its weight</u>.</div>
+          <div class="star-item"><u>Smaller block</u> → less pressure applied → found heavier than expected → <u>subject overestimates its weight</u>.</div>
+        </div>
+        <div class="section">
+          <div class="section-label">Key Error Terms</div>
+          <table class="data-table">
+            <tr><th>Error</th><th>Formula</th><th>What it means</th></tr>
+            <tr><td><strong>PSE</strong> (Point of Subjective Equality)</td><td>(Trial 1 + Trial 2) / 2</td><td>Average weight judged equal to standard</td></tr>
+            <tr><td><strong>CE</strong> (Constant Error) — Series I only</td><td>Avg PSE − 55</td><td>Due to innate inaccuracy in judgement</td></tr>
+            <tr><td><strong>GE</strong> (Gross Error) — Series II &amp; III</td><td>Avg PSE − 55</td><td>CE + error due to size</td></tr>
+            <tr><td><strong>NE</strong> (Net Error) — Series II &amp; III</td><td>GE − CE</td><td>Error due solely to size</td></tr>
+          </table>
+          <div class="star-item"><strong>Negative NE</strong> = underestimation = Series II (bigger block) → Hypothesis 1 proved.<br><strong>Positive NE</strong> = overestimation = Series III (smaller block) → Hypothesis 2 proved.</div>
+        </div>
+        <div class="section">
+          <div class="section-label">Viva Q&amp;A</div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What is the difference between Constant Error, Gross Error, and Net Error? <span class="viva-q-tag">EXP 3</span></div>
+            <div class="viva-a">CE (Series I) = Avg PSE − 55. It is due to innate inaccuracy in judgement. GE (Series II &amp; III) = Avg PSE − 55. It combines innate inaccuracy AND error due to size. NE = GE − CE. It is the error that occurs solely due to the size of the block.</div>
+          </div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What does a negative Net Error mean? <span class="viva-q-tag">EXP 3</span></div>
+            <div class="viva-a">A negative Net Error means underestimation — the subject judged the bigger block as lighter than it actually is. This proves Hypothesis 1.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Concept Achievement Intro -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 4</span>
+        <span class="exp-title">Concept Achievement — Key Concepts</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+        <div class="section">
+          <div class="section-label">What is a Concept?</div>
+          <div class="disc-text">
+            <p><u>A concept is a word which has certain specific meaning and this meaning is universally accepted.</u> <u>Concept is defined as a categorisation of objects, events or people that share common properties.</u></p>
+            <p><u>Concept achievement</u> is the process of discovering some quality or property common to a series of objects. Three important psychological processes involved: <strong>abstraction</strong> (observing features), <strong>discrimination</strong> (finding differences), <strong>generalization</strong> (applying the rule).</p>
+          </div>
+          <div class="star-item">According to <u>Heidbreder</u> — concepts with concrete features are easier for concept attainment than abstract features and concepts with numbers.</div>
+          <div class="star-item">The Concept Achievement Test by <u>M. Rajamanickam</u> is for <u>persons above 18 years</u>. It has 8 categories across 4 types: Concrete (Human Face, Animal, Bird), Object (Jug), Spatial (Square, Circle), Number (Three, Six).</div>
+        </div>
+        <div class="section">
+          <div class="section-label">Viva Q&amp;A</div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What are the four types of concepts? <span class="viva-q-tag">EXP 4</span></div>
+            <div class="viva-a">Simple (one quality — e.g. white), Conjunctive (two or more qualities — e.g. cat), Disjunctive (one quality puts it in the class — e.g. fuel), Relational (characteristics vary comparatively — e.g. more than, less than).</div>
+          </div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What are the three psychological processes in concept achievement? <span class="viva-q-tag">EXP 4</span></div>
+            <div class="viva-a">Abstraction — observing the features and characteristics of an object. Discrimination — finding the difference in features between objects. Generalization — applying this rule to other similar features and objects.</div>
+          </div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What happens if the subject fails to score the minimum in 6 sets? <span class="viva-q-tag">EXP 4</span></div>
+            <div class="viva-a">A 7th trial is given using the 1st set. This may be taken as the final level of concept achievement. The minimum score is 8 at the rate of one per category per set.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WAPIS Intro -->
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">EXP 5</span>
+        <span class="exp-title">WAPIS — Key Concepts</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+        <div class="section">
+          <div class="section-label">What is Intelligence?</div>
+          <div class="disc-text">
+            <p>According to <u>David Wechsler (1975)</u> — Intelligence is the capacity to understand the world, think rationally and use resources effectively when faced with challenges.</p>
+            <p>The term <u>'Mental Tests' was first employed by Cattell in 1870</u>. The modern intelligence testing movement was launched in 1905 by the French psychologist <u>Alfred Binet</u>. <u>William Stern</u> devised the concept of <u>IQ = MA/CA × 100</u>.</p>
+          </div>
+          <div class="star-item">Intelligence tests can be classified into: (1) Verbal, Nonverbal and Performance Tests; (2) Individual and Group Tests; (3) Speed and Power Tests.</div>
+        </div>
+        <div class="section">
+          <div class="section-label">About WAPIS</div>
+          <div class="disc-text">
+            <p>Since 1938, Wechsler Scales have proved to be the best available individual tests for evaluating intelligence among adults. WAIS has 11 sub-tests — first 6 form the verbal scale, last 5 form the performance scale. Only the <u>5 performance sub-tests</u> have been adapted to Indian conditions by <u>Prabha Ramalingaswamy</u> and is called <strong>WAPIS</strong>. It is an individual test, mainly used in <u>clinical studies and in counselling</u>.</p>
+          </div>
+          <div class="star-item">The 5 WAPIS sub-tests in order: <strong>Picture Completion → Digit Symbol → Block Design → Picture Arrangement → Object Assembly</strong></div>
+          <table class="data-table" style="margin-top:8px;">
+            <tr><th>Sub-test</th><th>What it measures</th><th>Time limit</th><th>Max score</th></tr>
+            <tr><td>Picture Completion</td><td>Visual alertness, long-term memory</td><td>20 sec/item</td><td>26</td></tr>
+            <tr><td>Digit Symbol</td><td>Speed, accuracy, visual-motor coordination</td><td>90 sec total</td><td>90</td></tr>
+            <tr><td>Block Design</td><td>Spatial reasoning, analysis</td><td>60–120 sec/design</td><td>48</td></tr>
+            <tr><td>Picture Arrangement</td><td>Social understanding, planning ability</td><td>60–120 sec/item</td><td>42</td></tr>
+            <tr><td>Object Assembly</td><td>Perceptual organisation, synthesis</td><td>120–180 sec/item</td><td>44</td></tr>
+          </table>
+        </div>
+        <div class="section">
+          <div class="section-label">Viva Q&amp;A</div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">Who developed WAPIS and what is it? <span class="viva-q-tag">EXP 5</span></div>
+            <div class="viva-a">WAPIS (Wechsler Adult Performance Intelligence Scale) is the performance scale of WAIS adapted to Indian conditions by Prabha Ramalingaswamy. It consists of 5 sub-tests: Picture Completion, Digit Symbol, Block Design, Picture Arrangement, and Object Assembly. It is an individual test used in clinical studies and counselling.</div>
+          </div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">When is the Block Design test discontinued? <span class="viva-q-tag">EXP 5</span></div>
+            <div class="viva-a">The Block Design test is discontinued after 3 consecutive failures. Failure on both trials of either design 1 or 2 is considered one failure.</div>
+          </div>
+          <div class="viva-item">
+            <div class="viva-q" onclick="toggleViva(this)">What are the IQ classification categories? <span class="viva-q-tag">EXP 5</span></div>
+            <div class="viva-a">Based on scaled scores and IQ conversion, classifications typically include: Average, Above Average, Superior, Very Superior. Refer to the WAPIS norms table for exact ranges.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /viva tab -->
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- STATS TAB — MEDIAN TEST                   -->
+  <!-- ══════════════════════════════════════════ -->
+  <div id="tab-stats" class="tab-content">
+
+    <div class="exp-card">
+      <div class="exp-header" onclick="toggleExp(this)">
+        <span class="exp-num">STATS</span>
+        <span class="exp-title">The Median Test</span>
+        <span class="exp-toggle">▾</span>
+      </div>
+      <div class="exp-body">
+
+        <div class="section">
+          <div class="section-label">What it is</div>
+          <div class="disc-text">
+            <p>The <u>Median Test is used to compare the performance of two independent groups</u>. A common median is found. If the two groups have been drawn at random from the same population, <u>1/2 of the scores in each group should lie above and 1/2 below the common median</u>. To test this null hypothesis, we draw up a <u>2 × 2 table</u> and calculate X² (Chi-square).</p>
+            <p>Above vs. below the common median constitutes one category in this table; experimental group vs. control group, the other.</p>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Steps to Calculate</div>
+          <ol class="steps">
+            <li>Combine all scores from both groups and arrange in <strong>ascending order</strong>.</li>
+            <li>Calculate the <strong>Common Median</strong> using: <strong>Mdn = (N + 1) / 2</strong></li>
+            <li>For each group, count how many scores fall <strong>above</strong> the common median and how many fall <strong>below</strong>.</li>
+            <li>Enter the frequencies into a <strong>2 × 2 fold table</strong>:<br><br>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<em>Below Median &nbsp;&nbsp;&nbsp; Above Median &nbsp;&nbsp;&nbsp; Total</em><br>
+              Exp. Group &nbsp;&nbsp;&nbsp; A &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; C &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (A+C)<br>
+              Control Group &nbsp; B &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; D &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (B+D)<br>
+              Total &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (A+B) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (C+D) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; N
+            </li>
+            <li>Calculate X² using the formula below.</li>
+            <li>Calculate <strong>df = (r-1)(c-1) = (2-1)(2-1) = 1</strong> for a 2×2 table.</li>
+            <li>Enter Table E with df = 1. At 0.05 level = 3.84; at 0.01 level = 6.63.</li>
+            <li>Interpret: if obtained X² > table value, null hypothesis is rejected.</li>
+          </ol>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Formula</div>
+          <div class="formula-box">
+            <div class="formula-label">Chi-Square for Median Test</div>
+            X² = N (|AD − BC|)² / (A+B)(C+D)(A+C)(B+D)
+          </div>
+          <div class="callout">
+            <strong>Yate's Correction</strong> is used when any one of the box entries is 5 or less than 5:<br>
+            X² = N (|AD − BC| − N/2)² / (A+B)(C+D)(A+C)(B+D)
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Interpretation</div>
+          <div class="star-item">If obtained X² &gt; table value → <strong>Null hypothesis rejected</strong>. There is a significant difference between the two groups.</div>
+          <div class="star-item">If obtained X² &lt; table value → <strong>Null hypothesis retained</strong>. No significant difference between groups.</div>
+          <div class="callout"><strong>df = 1</strong> → Table values: <strong>0.05 level = 3.84</strong> &nbsp;·&nbsp; <strong>0.01 level = 6.63</strong></div>
+        </div>
+
+        <div class="section">
+          <div class="section-label">Worked Example</div>
+          <div class="disc-text">
+            <p>A clinical psychologist wants to investigate the effects of a tranquilizer on hand tremor. 14 patients are given the drug (experimental group) and 14 patients are given the Placebo (control group). Tremor is measured by a steadiness tester. Does the drug increase steadiness (indicated by a lower score in the experimental group)?</p>
+          </div>
+          <div class="callout">
+            N = 28 total scores. Mdn = (28+1)/2 = 14.5<br>
+            Arrange in ascending order → 14th score = 52, 15th score = 54 → <strong>Common Median = 53</strong>
+          </div>
+          <p style="font-size:13px;color:var(--muted);margin:14px 0 8px;font-family:'DM Mono',monospace;letter-spacing:.05em;">2 × 2 Fold Table</p>
+          <table class="data-table">
+            <tr><th></th><th>Below Median</th><th>Above Median</th><th>Total</th></tr>
+            <tr><td><strong>Experimental Group</strong></td><td>8 (A)</td><td>6 (C)</td><td>14</td></tr>
+            <tr><td><strong>Control Group</strong></td><td>6 (B)</td><td>8 (D)</td><td>14</td></tr>
+            <tr><td><strong>Total</strong></td><td>14</td><td>14</td><td>28</td></tr>
+          </table>
+          <div class="formula-box">
+            X² = 28(|8×8 − 6×6|)² / (8+6)(6+8)(8+6)(6+8)<br><br>
+            = 28(64 − 36)² / (14)(14)(14)(14)<br><br>
+            = 28 × 28² / 14⁴<br><br>
+            = 21952 / 38416 = <strong>0.57</strong><br><br>
+            df = (2-1)(2-1) = 1<br>
+            At 0.05 level = 3.84 · At 0.01 level = 6.63
+          </div>
+          <div class="callout"><strong>Conclusion:</strong> Obtained X² of 0.57 is much lower than both table values (3.84 and 6.63). Therefore, the <strong>Null hypothesis may be retained</strong>. There is no significant difference between the experimental and control groups — the drug does not significantly increase steadiness.</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /stats tab -->
+
+</div><!-- /container -->
+
+<script>
+  function switchTab(name, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  function toggleExp(header) {
+    header.classList.toggle('open');
+    header.nextElementSibling.classList.toggle('open');
+  }
+
+  function toggleViva(el) {
+    el.nextElementSibling.classList.toggle('open');
+  }
+
+  function toggleTheme() {
+    const html = document.documentElement;
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    document.getElementById('toggle-label').textContent = isDark ? 'Light' : 'Dark';
+    localStorage.setItem('partb-theme', isDark ? 'light' : 'dark');
+  }
+
+  (function() {
+    const saved = localStorage.getItem('partb-theme');
+    if (saved === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.getElementById('toggle-label').textContent = 'Dark';
+    }
+  })();
+
+  // Open first card by default
+  document.querySelector('.exp-header').click();
+</script>
+</body>
+</html>
