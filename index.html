@@ -111,25 +111,47 @@
 
   /* ── WAPIS raw score norms table ── */
   .wapis-norms-wrap{overflow-x:auto;margin:12px 0;}
-  .wapis-norms{width:100%;border-collapse:collapse;font-size:12px;min-width:580px;}
-  .wapis-norms th{padding:8px 10px;text-align:center;font-family:'DM Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--accent-border);}
-  .wapis-norms td{padding:8px 10px;border:1px solid var(--border);text-align:center;vertical-align:top;}
-  .wapis-norms .th-name{background:#0e4878;color:#d0e8ff;text-align:left;}
-  .wapis-norms .th-low{background:#c0392b;color:white;}
-  .wapis-norms .th-belavg{background:#e67e22;color:white;}
-  .wapis-norms .th-avg{background:#27ae60;color:white;}
-  .wapis-norms .th-abvavg{background:#2980b9;color:white;}
-  .wapis-norms .th-high{background:#6c3483;color:white;}
-  .wapis-norms .th-interp{background:var(--accent);color:white;}
+  .wapis-norms{width:100%;border-collapse:collapse;font-size:13px;}
+  .wapis-norms th{padding:10px 12px;text-align:left;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--accent-border);}
+  .wapis-norms td{padding:10px 12px;border:1px solid var(--border);vertical-align:top;line-height:1.6;}
+  .wapis-norms .th-name{background:#0e4878;color:#d0e8ff;width:55%;}
+  .wapis-norms .th-interp{background:var(--accent);color:white;width:45%;}
   .wapis-norms tbody tr:nth-child(even) td{background:var(--comp-row-alt);}
-  .wapis-norms td.td-name{text-align:left;font-weight:500;}
-  .wapis-norms td.td-interp{text-align:left;font-size:11px;line-height:1.5;}
+  .wapis-norms td.td-name{font-weight:500;}
+  .wapis-norms td.td-interp{font-size:13px;line-height:1.6;}
 
   /* IQ table */
   .iq-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
   .iq-table th{background:var(--accent);color:white;font-family:'DM Mono',monospace;font-size:11px;padding:8px 14px;border:1px solid var(--accent-border);text-align:center;}
   .iq-table td{padding:8px 14px;border:1px solid var(--border);text-align:center;}
   .iq-table tr:nth-child(even) td{background:var(--comp-row-alt);}
+
+  /* ── COMPARE TABLE ── */
+  .compare-wrap{overflow-x:auto;margin:0 0 32px;border:1px solid var(--border);border-radius:12px;}
+  .compare-table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:900px;}
+  .compare-table thead tr.row-exps th{padding:12px 14px;font-family:'DM Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;border:1px solid rgba(255,255,255,.15);white-space:nowrap;text-align:center;}
+  .compare-table thead tr.row-exps th:first-child{background:var(--surface2);color:var(--muted);border-color:var(--border);min-width:130px;position:sticky;left:0;z-index:2;}
+  .compare-table thead tr.row-exps th.col-mrmt{background:#1a5a8a;color:#d0eeff;}
+  .compare-table thead tr.row-exps th.col-cop{background:#1a6b3a;color:#d0f0e0;}
+  .compare-table thead tr.row-exps th.col-swi{background:#6b2a8a;color:#eeddf8;}
+  .compare-table thead tr.row-exps th.col-cat{background:#8a5a1a;color:#f8e8d0;}
+  .compare-table thead tr.row-exps th.col-wapis{background:#8a1a1a;color:#f8d8d8;}
+  .compare-table tbody tr td:first-child{font-family:'DM Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);background:var(--accent-light);border-right:2px solid var(--accent-border);padding:10px 12px;white-space:nowrap;position:sticky;left:0;z-index:1;vertical-align:top;}
+  .compare-table tbody td{padding:10px 12px;border:1px solid var(--border);vertical-align:top;line-height:1.6;font-size:12.5px;}
+  .compare-table tbody tr:nth-child(odd) td:not(:first-child){background:var(--surface);}
+  .compare-table tbody tr:nth-child(even) td:not(:first-child){background:var(--comp-row-alt);}
+  .compare-table tbody tr:hover td:not(:first-child){background:var(--highlight);}
+  .ct-hyp{color:var(--hyp-text);font-style:italic;}
+  .ct-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;margin:1px 0;letter-spacing:.05em;}
+  .ct-iv{background:#e0f0ff;color:#1a4a80;border:1px solid #a8ccec;}
+  .ct-rv{background:#e8ffe0;color:#1a5a20;border:1px solid #8ecbb4;}
+  .ct-dv{background:#f8eaff;color:#5a1a90;border:1px solid #c0a0e8;}
+  .ct-none{color:var(--muted);font-style:italic;font-size:11px;}
+  .ct-formula{font-family:'DM Mono',monospace;font-size:11px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 6px;display:inline-block;margin-top:3px;}
+  .ct-ul{text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:2px;}
+  .compare-intro{font-size:13px;color:var(--muted);margin-bottom:16px;font-style:italic;text-align:center;}
+  .compare-row-label{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);padding:8px 14px;background:var(--accent-light);border-top:2px solid var(--accent-border);border-bottom:2px solid var(--accent-border);font-weight:700;text-align:center;display:flex;align-items:center;gap:10px;}
+  .compare-row-label::before,.compare-row-label::after{content:'';flex:1;height:1px;background:var(--accent-border);}
 
   @media(max-width:600px){header h1{font-size:1.6rem;}.tab-btn{font-size:11px;padding:10px 4px;}.norms-grid{grid-template-columns:1fr;}.cat-grid{grid-template-columns:repeat(2,1fr);}}
 </style>
@@ -156,6 +178,7 @@
 <div class="tab-nav">
   <button class="tab-btn active" onclick="switchTab('experiments',this)">Experiments 1–5<span class="tab-pts">MRMT · CoP · SWI · CAT · WAPIS</span></button>
   <button class="tab-btn" onclick="switchTab('viva',this)">Viva / Intro<span class="tab-pts">Key concepts</span></button>
+  <button class="tab-btn" onclick="switchTab('compare',this)">Compare All<span class="tab-pts">Side-by-side</span></button>
   <button class="tab-btn" onclick="switchTab('stats',this)">Statistics<span class="tab-pts">Median Test · 5 pts</span></button>
 </div>
 
@@ -840,45 +863,64 @@
     </div>
 
     <div class="section">
-      <div class="section-label">Scoring &amp; Raw Score Norms</div>
+      <div class="section-label">Scoring &amp; Analysis</div>
 
       <div class="wapis-norms-wrap">
         <table class="wapis-norms">
           <thead>
             <tr>
-              <th class="th-name">Sub-test</th>
-              <th class="th-low">Low</th>
-              <th class="th-belavg">Below Average</th>
-              <th class="th-avg">Average</th>
-              <th class="th-abvavg">Above Average</th>
-              <th class="th-high">High</th>
+              <th class="th-name">Sub-test &amp; Scoring Rules</th>
               <th class="th-interp">What it Analyses</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td class="td-name"><strong>Picture Completion</strong><br><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">Max: 26 · 1 pt each · 20 sec/item</span></td>
-              <td>Below 3</td><td>4 – 8</td><td>9 – 17</td><td>18 – 22</td><td>23 – 26</td>
+              <td class="td-name">
+                <strong>1. Picture Completion</strong><br>
+                26 cards. An important part of each picture is missing — subject names the missing part.<br>
+                Time limit: <u>20 seconds per item</u>.<br>
+                If subject cannot answer first two items, examiner gives the answers; no help for remaining items.<br>
+                Scoring: <u>1 point per correct response</u>. Max = <strong>26</strong>.
+              </td>
               <td class="td-interp">Perceptual alertness and the ability to distinguish essential from the non-essential.</td>
             </tr>
             <tr>
-              <td class="td-name"><strong>Digit Symbol</strong><br><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">Max: 90 · 1 pt/square · ½ pt reversed · 90 sec total</span></td>
-              <td>Below 19</td><td>20 – 34</td><td>35 – 55</td><td>56 – 80</td><td>81 – 90</td>
+              <td class="td-name">
+                <strong>2. Digit Symbol</strong><br>
+                Subject substitutes digits with symbols by referring to the key. Demonstrate first 3 symbols, then let subject complete remaining 7 from the sample.<br>
+                Time limit: <u>90 seconds</u> to complete remaining 90 symbols.<br>
+                Scoring: <u>1 point per square filled correctly</u>. <u>Half credit for reversed symbols</u>. 10 sample items not included. Max = <strong>90</strong>.
+              </td>
               <td class="td-interp">Visual-motor speed.</td>
             </tr>
             <tr>
-              <td class="td-name"><strong>Block Design</strong><br><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">Max: 48 · Designs 1–10: 4 pts each · 60/120 sec · Stop after 3 failures</span></td>
-              <td>Below 8</td><td>9 – 17</td><td>18 – 28</td><td>29 – 42</td><td>43 – 48</td>
+              <td class="td-name">
+                <strong>3. Block Design</strong><br>
+                10 cards with designs. Four blocks (all red / all white / half-red-half-white) — subject puts blocks together to match each design. First two cards demonstrated.<br>
+                Time limit: Designs 1–6 = <u>60 sec each</u>; Designs 7–10 = <u>120 sec each</u>.<br>
+                <u>Discontinued after 3 consecutive failures.</u> Failure on both trials of design 1 or 2 = one failure.<br>
+                Scoring: Designs 1–2: <u>4 pts (1st trial) or 4 pts (2nd trial)</u>. Designs 3–6: 4 pts each. Designs 7–10: 4 pts each. Refer table for time bonuses. Max = <strong>48</strong>.
+              </td>
               <td class="td-interp">Concept formation, visual motor coordination, spatial organization.</td>
             </tr>
             <tr>
-              <td class="td-name"><strong>Picture Arrangement</strong><br><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">Max: 42 · Items 1–2: 4 pts (T1) / 2 pts (T2) · Items 3–9: 4 pts · 60/120 sec</span></td>
-              <td>Below 8</td><td>9 – 15</td><td>16 – 26</td><td>27 – 36</td><td>37 – 42</td>
+              <td class="td-name">
+                <strong>4. Picture Arrangement</strong><br>
+                9 items — cards arranged in correct order tell a story. Cards presented in order indicated by numbers on back; subject arranges them meaningfully.<br>
+                If subject fails both items 1 and 2, discontinue.<br>
+                Time limit: <u>60 seconds</u> for first 6 items; <u>120 seconds</u> for items 7–9. Two trials given for items 1 and 2.<br>
+                Scoring: Items 1–2: <u>4 pts (1st trial) or 2 pts (2nd trial)</u>. Items 3–9: 4 pts each. Refer table for time bonuses. Max = <strong>42</strong>.
+              </td>
               <td class="td-interp">Measure of Social Intelligence. Ability to comprehend the total situation and evaluate implications of actions. Ability to interpret and anticipate social events.</td>
             </tr>
             <tr>
-              <td class="td-name"><strong>Object Assembly</strong><br><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);">Max: 44 · Mannequin 5 · Profile 9 · Hand 7 · Elephant 8 · 120/180 sec</span></td>
-              <td>Below 8</td><td>9 – 15</td><td>16 – 26</td><td>27 – 36</td><td>37 – 42</td>
+              <td class="td-name">
+                <strong>5. Object Assembly</strong><br>
+                Pieces of each item presented; subject arranges them to form an object.<br>
+                Order: Mannequin → Profile → Hand → Elephant.<br>
+                Time limit: first 2 items = <u>120 seconds</u>; last two items = <u>180 seconds</u>.<br>
+                Scoring: scored by number of pieces correctly placed. Mannequin = 5 · Profile = 9 · Hand = 7 · Elephant = 8. Refer table for time bonuses. Max = <strong>44</strong>.
+              </td>
               <td class="td-interp">Visual motor coordination, perceptual speed and manipulation.</td>
             </tr>
           </tbody>
@@ -1181,6 +1223,256 @@
     </div>
   </div>
 </div><!-- /stats tab -->
+
+<!-- ═══════════════ COMPARE TAB ═══════════════ -->
+<div id="tab-compare" class="tab-content">
+
+<p class="compare-intro">Scroll horizontally to view all experiments. Tap any row to compare across all five practicals at a glance.</p>
+
+<div class="compare-wrap">
+<table class="compare-table">
+<thead>
+  <tr class="row-exps">
+    <th>Heading</th>
+    <th class="col-mrmt">EXP 1<br>MRMT</th>
+    <th class="col-cop">EXP 2<br>Competition</th>
+    <th class="col-swi">EXP 3<br>Size-Weight Illusion</th>
+    <th class="col-cat">EXP 4<br>Concept Achievement</th>
+    <th class="col-wapis">EXP 5<br>WAPIS</th>
+  </tr>
+</thead>
+<tbody>
+
+<!-- ── PROBLEM ── -->
+<tr>
+  <td>PROBLEM</td>
+  <td>To measure the <span class="ct-ul">manual dexterity</span> of the subject by administering MRMT.</td>
+  <td>To determine experimentally the <span class="ct-ul">effect of competition</span> on the performance of the subject.</td>
+  <td>To study experimentally the effect of <span class="ct-ul">perception of size</span> on judgement of weights.</td>
+  <td>To study the processes of <span class="ct-ul">Concept Achievement</span> using the CAT by M. Rajamanickam.</td>
+  <td>To assess the <span class="ct-ul">intelligence</span> of the subject using WAPIS.</td>
+</tr>
+
+<!-- ── HYPOTHESIS ── -->
+<tr>
+  <td>HYPOTHESIS</td>
+  <td><span class="ct-none">No hypothesis — aptitude / norm-referenced test.</span></td>
+  <td><span class="ct-hyp">Performance of the subject significantly improves with competition.</span></td>
+  <td>
+    <span class="ct-hyp">H1: Perception of larger size leads to <strong>underestimation</strong> of weight.</span><br>
+    <span class="ct-hyp">H2: Perception of smaller size leads to <strong>overestimation</strong> of weight.</span>
+  </td>
+  <td>
+    <span class="ct-hyp">H1: Correct answers progressively increase in each set as concept achievement takes place.</span><br>
+    <span class="ct-hyp">H2: Concrete concepts take fewer trials than object, spatial &amp; number concepts.</span>
+  </td>
+  <td><span class="ct-none">No hypothesis — assessment / norm-referenced test.</span></td>
+</tr>
+
+<!-- ── PLAN ── -->
+<tr>
+  <td>PLAN</td>
+  <td>Administer MRMT in two series (Placing &amp; Turning). Interpret time scores with reference to standard norms.</td>
+  <td>Compare performance of the individual subject under <span class="ct-ul">competitive and non-competitive</span> conditions.</td>
+  <td>Compare the <span class="ct-ul">extent of error</span> committed in the three series while judging weight.</td>
+  <td>Administer the test to the subject; note number of correct answers for each set and the category of concepts formed.</td>
+  <td>Administer the <span class="ct-ul">five sub-tests</span> of WAPIS; score and interpret data with reference to norms.</td>
+</tr>
+
+<!-- ── VARIABLES ── -->
+<tr>
+  <td>VARIABLES</td>
+  <td><span class="ct-none">Not applicable — no experimental variables; it is a standardised aptitude measure.</span></td>
+  <td>
+    <span class="ct-badge ct-iv">IV</span> Instructions given to induce competition<br>
+    <span class="ct-badge ct-rv">RV</span> Tasks matched in difficulty &amp; time<br>
+    <span class="ct-badge ct-dv">DV</span> Performance under competitive vs non-competitive conditions
+  </td>
+  <td>
+    <span class="ct-badge ct-iv">IV</span> Size of the standard block<br>
+    <span class="ct-badge ct-rv">RV</span> Progressive increase in weight of variable blocks &amp; their identical appearance<br>
+    <span class="ct-badge ct-dv">DV</span> Judgement of weight (PSE)
+  </td>
+  <td>
+    <span class="ct-badge ct-iv">IV</span> Type of concept — concrete, object, spatial, numerical<br>
+    <span class="ct-badge ct-dv">DV</span> No. of correct answers per concept type; no. of trials taken for attainment
+  </td>
+  <td><span class="ct-none">Not applicable — assessment instrument with standardised norms.</span></td>
+</tr>
+
+<!-- ── MATERIALS ── -->
+<tr>
+  <td>MATERIALS</td>
+  <td>
+    • MRMT board (wooden board + tray, <strong>58 symmetrical holes</strong>)<br>
+    • <strong>58 cylindrical wooden blocks</strong> (Blue / Red sides)<br>
+    • Stop Clock · Writing Materials
+  </td>
+  <td>
+    • Data sheets with circles arranged in order<br>
+    • Stop watch / Stop clock<br>
+    • Writing materials<br>
+    • 🍫 Chocolate (reward incentive)
+  </td>
+  <td>
+    • <strong>3 standard blocks</strong> — different sizes, all <strong>55 gms</strong> (bigger / equal / smaller)<br>
+    • <strong>11 variable/comparison blocks</strong> — 30–80 gms, progressive +5 gms, all equal size<br>
+    • Writing Materials
+  </td>
+  <td>
+    • <strong>Response set</strong> — 6 sets × 8 picture categories with response words (non-sense syllables)<br>
+    • <strong>Stimulus set</strong> — same pictures without response words<br>
+    • Data Sheet · Stop Clock
+  </td>
+  <td>
+    • Booklet: Picture Completion + Block Design<br>
+    • Booklet: Picture Arrangement cards<br>
+    • 16 red &amp; white cubes (Block Design)<br>
+    • 4 boxes with pieces (Object Assembly)<br>
+    • Scoring key (Digit Symbol)<br>
+    • Stop Clock · Writing Materials · Norms
+  </td>
+</tr>
+
+<!-- ── PRECAUTIONS / CONTROLS ── -->
+<tr>
+  <td>PRECAUTIONS &amp; CONTROLS</td>
+  <td>
+    1. Demonstration given in <strong>both</strong> placing and turning series.<br>
+    2. Subject stands only at the <strong>centre</strong> of the table; not allowed to move either way.<br>
+    3. Time recorded accurately.
+  </td>
+  <td>
+    1. Avoid distractions.<br>
+    2. Instructions to induce competitive spirit must be <strong>powerful enough</strong> to motivate subject.<br>
+    3. Give a rest period between the two series.
+  </td>
+  <td>
+    1. No clue given about the weight of the standard blocks.<br>
+    2. Random arrangement done without the knowledge of the subject.<br>
+    3. Each block lifted with the <strong>preferred hand</strong>, same force, same height.<br>
+    4. Subject keeps sight fixed on the block being lifted.
+  </td>
+  <td>
+    1. Order of presentation of response set pictures changed systematically for each set.<br>
+    2. Each picture shown for <strong>10 sec</strong>; <strong>20 sec</strong> break between sets.<br>
+    3. Correct response word told only <strong>once</strong> (for first set using stimulus set).<br>
+    4. Correct response words <strong>not given</strong> for other sets.<br>
+    5. 7th trial given (with 1st set) if minimum score of 8 not reached.
+  </td>
+  <td>
+    1. Instructions must be simple and clear.<br>
+    2. In Picture Completion, pointing = verbal response; count as passed.<br>
+    3. Time limits followed strictly; credit time bonuses correctly.<br>
+    4. Avoid errors converting raw → scaled scores → IQs.<br>
+    5. Block Design: discontinued after <strong>3 consecutive failures</strong>. Failure on both trials of design 1 or 2 = 1 failure.
+  </td>
+</tr>
+
+<!-- ── PROCEDURE ── -->
+<tr>
+  <td>PROCEDURE</td>
+  <td>
+    <strong>5 trials each series</strong> (Trial 1 = practice; Trials 2–5 scored).<br><br>
+    <em>Placing:</em> Subject stands at centre; picks blocks from tray; places column by column L→R.<br><br>
+    <em>Turning:</em> Blocks already in board (red atop); subject picks with right hand, twists until blue faces left, grasps with left hand, replaces blue atop; column by column, bottom to top.
+  </td>
+  <td>
+    <strong>Series 1 (Non-competitive):</strong> Demonstrate drawing smiling faces in circles; give instructions; 3 minutes; count correctly drawn faces; rest period.<br><br>
+    <strong>Series 2 (Competitive):</strong> Same procedure; chocolate incentive offered for beating own score; motivating instructions given.
+  </td>
+  <td>
+    <strong>3 series × 2 trials each.</strong><br><br>
+    Table at height where forearm is parallel to floor. 11 variable blocks in a semicircle (random order). Standard block at centre. Subject stands, lifts each block ~8 inches with preferred hand (thumb, index, middle finger).<br><br>
+    Series I = same-size standard; Series II = bigger; Series III = smaller. In Trial 2, positions of comparison blocks interchanged without subject's knowledge.
+  </td>
+  <td>
+    <strong>6 trials</strong> (each set = one trial). Enter 'R' or 'W' for each response.<br><br>
+    Each picture exposed for 10 sec; 20 sec gap between sets.<br><br>
+    Response word told only for the first set. Subject must recall response words from Set 2 onwards. A <strong>7th trial</strong> (using Set 1) may be given if minimum not reached.
+  </td>
+  <td>
+    Five sub-tests administered in fixed order after establishing rapport:<br><br>
+    <strong>1. Picture Completion</strong> — name missing part (20 sec/item)<br>
+    <strong>2. Digit Symbol</strong> — substitute digits with symbols (90 sec total)<br>
+    <strong>3. Block Design</strong> — match card designs with blocks (60/120 sec)<br>
+    <strong>4. Picture Arrangement</strong> — arrange cards into story order (60/120 sec)<br>
+    <strong>5. Object Assembly</strong> — assemble pieces into object (120/180 sec)
+  </td>
+</tr>
+
+<!-- ── INSTRUCTIONS ── -->
+<tr>
+  <td>INSTRUCTIONS</td>
+  <td>
+    <em>Placing:</em> "This is a speed test. Place all the blocks into the holes as fast as you can. Use one hand. Reach to the block nearest to you in the left hand column. Follow the same procedure till all holes are filled. Always stand at the centre."<br><br>
+    <em>Turning:</em> "Pick up the block with right hand until blue side faces left hand, grasp with left hand, put it back in the same hole blue atop. Start from left side. Proceed column wise towards the top."
+  </td>
+  <td>
+    <em>Non-competitive:</em> "When I say 'start', start drawing smiling faces in the circles as shown earlier till I ask you to stop."<br><br>
+    <em>Competitive (chocolate incentive):</em> "You drew [X] smiling faces — that's a great start! If you can beat your own score this time, you win a chocolate. I know you can do better. Give it everything you've got. Ready? Start!"
+  </td>
+  <td>
+    "Here is a block at the centre and 11 blocks for comparison. Lift the standard block to a height of 8 inches and place it back. Lift each variable block with the same force and height and compare with the standard. Keep your sight fixed on the block. Indicate <span class="ct-ul">one block out of 11 which is equal in weight</span> to the block at the centre. Lift using your <span class="ct-ul">thumb, index finger and middle finger</span>."
+  </td>
+  <td>
+    "I will show you a series of pictures. At the bottom of every picture, a four-letter non-sense syllable word is printed — this is called the response word. You will have to associate each picture with the response word. After this, I will show you the same pictures without the response word and you will have to tell me the response word of the picture."
+  </td>
+  <td>
+    <em>Pic Completion:</em> "Show pictures with some important part missing. You have to name the missing part."<br>
+    <em>Digit Symbol:</em> "Refer to the key; fill remaining squares with respective symbols as fast as you can. Do not omit any squares."<br>
+    <em>Block Design:</em> "Arrange the blocks to match the design on a card. There are 10 cards, work fast."<br>
+    <em>Pic Arrangement:</em> "Put the cards in the right order so they will tell a story. 9 sets, work fast."<br>
+    <em>Object Assembly:</em> "If these pieces are put together correctly, they will make something. Put them together as quickly as you can."
+  </td>
+</tr>
+
+<!-- ── ANALYSIS ── -->
+<tr>
+  <td>ANALYSIS</td>
+  <td>
+    Record <strong>total time (sec)</strong> per series (last 4 trials).<br>
+    Locate <strong>percentile rank</strong> in norms.<br><br>
+    <span class="ct-formula">Below 20 = Poor</span>
+    <span class="ct-formula">21–40 = Fair</span>
+    <span class="ct-formula">41–60 = Average</span>
+    <span class="ct-formula">61–90 = Good</span>
+    <span class="ct-formula">91–100 = Very Good</span><br><br>
+    Note: <em>Lower time = faster = better.</em>
+  </td>
+  <td>
+    Score = no. of smiling faces correctly drawn per series.<br><br>
+    <span class="ct-formula">C.I. = Competitive Score ÷ Non-Competitive Score</span><br><br>
+    C.I. &gt; 1.00 → competition facilitated performance → <strong>hypothesis proved.</strong>
+  </td>
+  <td>
+    <span class="ct-formula">Avg PSE = (Trial 1 + Trial 2) ÷ 2</span><br>
+    <span class="ct-formula">CE (Series I) = Avg PSE − 55</span><br>
+    <span class="ct-formula">GE (Series II &amp; III) = Avg PSE − 55</span><br>
+    <span class="ct-formula">NE = GE − CE</span><br><br>
+    <strong>Negative NE</strong> = underestimation → H1 proved.<br>
+    <strong>Positive NE</strong> = overestimation → H2 proved.
+  </td>
+  <td>
+    Score 1 per correct response. <strong>Max = 48, Min = 0.</strong><br><br>
+    Calculate total correct per set (trial).<br>
+    Calculate total &amp; mean trials taken per concept type (Concrete / Object / Spatial / Number).<br><br>
+    Check: did concrete concepts take fewest trials? (H2)<br>
+    Did correct answers increase progressively? (H1)
+  </td>
+  <td>
+    Compute <strong>raw score</strong> per sub-test → convert to <strong>scaled score</strong> using norms → sum scaled scores → convert to <strong>IQ</strong>.<br><br>
+    <span class="ct-formula">IQ = (MA ÷ CA) × 100</span><br><br>
+    IQ Classification:<br>
+    130+ Very Superior · 120–129 Superior · 110–119 Above Avg · 90–109 Average · 80–89 Below Avg · 70–79 Borderline · ≤69 Mentally Retarded
+  </td>
+</tr>
+
+</tbody>
+</table>
+</div><!-- /compare-wrap -->
+
+</div><!-- /compare tab -->
 
 </div><!-- /container -->
 
